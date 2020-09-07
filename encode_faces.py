@@ -61,7 +61,7 @@ if os.path.exists(args["csv"]) and os.path.exists(args["encodings"]):
     df = pd.read_csv(args["csv"], index_col=0)
     new_df = pd.DataFrame(columns=df.columns)
     new_df['names'] = list(set(KnowNames))
-    # new_df = new_df.fillna("absent")
+    new_df = new_df.fillna(0)
 
     df = df.append(new_df)
     df = df.sort_values(by='names')

@@ -92,8 +92,8 @@ while True:
         break
 
 # append current attendance result to the dataframe
-faceCounter = {key: "present" if value >=
-               30 else "absent" for(key, value) in faceCounter.items()}
+faceCounter = {key: 1 if value >=
+               30 else 0 for(key, value) in faceCounter.items()}
 date_col = datetime.now().strftime("%Y-%m-%d %H:%M")
 df = pd.read_csv(args["csv"], index_col=0)
 df[date_col] = df["names"].map(lambda name: faceCounter[name])
