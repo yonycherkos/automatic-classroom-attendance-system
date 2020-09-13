@@ -59,6 +59,8 @@ while True:
         cv2.imshow("detected face", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord("k"):
+            if not os.path.exists(args["output"]):
+                os.makedirs(args["output"])
             p = os.path.sep.join([args["output"], "{}.png".format(str(total).zfill(5))])
             cv2.imwrite(p, orig)
             total += 1
