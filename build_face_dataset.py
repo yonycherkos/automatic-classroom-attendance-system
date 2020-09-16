@@ -50,15 +50,17 @@ while True:
         (startX, startY, endX, endY) = box.astype("int")
 
         # draw the boundidxbox = detections[0, 0, idxng box the frame
-        cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 0, 255), 2)
+        cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
         text = "{:.2f}".format(confidence * 100)
         y = startY - 10 if startY - 10 > 10 else startY + 10
-        cv2.putText(frame, text, (startX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+        cv2.putText(frame, text, (startX, y), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
 
         # display the detected faces
         cv2.imshow("detected face", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord("k"):
+            if not os.path.exists(args["output"]):
+                os.makedirs(args["output"])
             p = os.path.sep.join([args["output"], "{}.png".format(str(total).zfill(5))])
             cv2.imwrite(p, orig)
             total += 1

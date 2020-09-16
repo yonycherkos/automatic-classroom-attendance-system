@@ -14,8 +14,16 @@ class EnrollStudent(QtWidgets.QMainWindow):
         self.registerBtn.clicked.connect(self.register)
         self.backBtn.clicked.connect(self.back)
 
-    def takeImages(self):
-        pass
+    def takeImages(self): 
+        studentName = self.lineEdit.text()
+        studentName = studentName.replace(" ", "_")
+        if studentName == "":
+            pass
+        else:
+            prototxt = "model/deploy.prototxt.txt"
+            model = "model/res10_300x300_ssd_iter_140000.caffemodel"
+            output = "dataset/{}".format(studentName)
+            os.system("python build_face_dataset.py --prototxt {} --model {} --output {}".format(prototxt, model, output))
 
     def uploadImages(self):
         pass
