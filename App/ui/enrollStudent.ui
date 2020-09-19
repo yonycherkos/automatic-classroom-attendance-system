@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
+    <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QFrame" name="RegistrationPage">
       <property name="minimumSize">
        <size>
@@ -460,54 +460,17 @@
         <string>Register</string>
        </property>
       </widget>
-      <widget class="QProgressBar" name="progressBar">
+      <widget class="QLabel" name="registerLabel">
        <property name="geometry">
         <rect>
-         <x>510</x>
-         <y>640</y>
-         <width>281</width>
-         <height>23</height>
+         <x>300</x>
+         <y>650</y>
+         <width>481</width>
+         <height>17</height>
         </rect>
        </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Highlight">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Highlight">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Highlight">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>145</red>
-             <green>141</green>
-             <blue>126</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
-       </property>
-       <property name="value">
-        <number>24</number>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </widget>
