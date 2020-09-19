@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from enroll_student import EnrollStudent
 from PyQt5 import uic
 import sys
 import os
@@ -14,7 +15,6 @@ class HomePage(QtWidgets.QMainWindow):
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
 
     def enrollStudent(self):
-        from enroll_student import EnrollStudent
         self.enrollStudent = EnrollStudent()
         self.enrollStudent.show()
         self.close()

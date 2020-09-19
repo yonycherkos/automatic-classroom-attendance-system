@@ -15,8 +15,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-     <widget class="QFrame" name="mainWindow">
+    <item row="0" column="0">
+     <widget class="QFrame" name="RegistrationPage">
       <property name="minimumSize">
        <size>
         <width>811</width>

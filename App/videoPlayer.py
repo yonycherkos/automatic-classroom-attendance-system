@@ -1,5 +1,5 @@
 import sys
-sys.path.append(".") # add the parent directory
+sys.path.append(".")
 
 from PyQt5.QtWidgets import QWidget, QApplication, QMainWindow, QPushButton, QVBoxLayout
 from detect_faces import face_detection
