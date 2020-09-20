@@ -22,6 +22,7 @@ class RegisterStudent(QtWidgets.QMainWindow):
         self.quitBtn.clicked.connect(self.quit)
         self.uploadImagesBtn.clicked.connect(self.uploadImages)
         self.registerBtn.clicked.connect(self.register)
+        self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
         self.backBtn.clicked.connect(self.back)
 
         self.capturedFaces = 0
@@ -89,7 +90,7 @@ class RegisterStudent(QtWidgets.QMainWindow):
 
     def register(self):
         self.registerLabel.setText("Registering...")
-        os.system("python encode_faces.py --dataset {} --encodings {} --csv {} --prototxt {} --model {}".format(
+        os.system("python face_recognizer/encode_faces.py --dataset {} --encodings {} --csv {} --prototxt {} --model {}".format(
             self.output, self.encodings, self.csv, self.prototxt, self.model))
         displayText = "{} successful registered".format(self.lineEdit.text())
         self.showDialog(icon=QtWidgets.QMessageBox.Information,

@@ -2,7 +2,7 @@ import sys
 sys.path.append(".")
 
 from PyQt5.QtWidgets import QWidget, QApplication, QMainWindow, QPushButton, QVBoxLayout
-from detect_faces import face_detection
+from face_recognizer.detect_faces import face_detection
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 import numpy as np
