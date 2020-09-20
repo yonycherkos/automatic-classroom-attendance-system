@@ -1,10 +1,13 @@
-import os
-import cv2
-from PyQt5 import uic
-from PyQt5 import QtCore, QtGui, QtWidgets
-from videoPlayer import VideoPlayer, FaceDetectionWidget
 import sys
 sys.path.append(".")
+
+import os
+import cv2
+import shutil
+from PyQt5 import uic
+from imutils import paths
+from PyQt5 import QtCore, QtGui, QtWidgets
+from videoPlayer import VideoPlayer, FaceDetectionWidget
 
 
 class EnrollStudent(QtWidgets.QMainWindow):
@@ -24,13 +27,17 @@ class EnrollStudent(QtWidgets.QMainWindow):
         self.capturedFaces = 0
         self.output = ""
 
+        self.encodings = "output/encodings2.pickle"
+        self.csv = "output/attendance.csv"
+        self.prototxt = "model/deploy.prototxt.txt"
+        self.model = "model/res10_300x300_ssd_iter_140000.caffemodel"
+
     def takeImages(self):
-        studentName = self.lineEdit.text()
-        studentName = studentName.replace(" ", "_")
-        self.videoFrame.setVisible(True)
-        if studentName == "":
+        if self.lineEdit.text() == "":
             self.videoLabel.setText("Enter student full name!")
         else:
+            self.constructOutput()
+            self.videoFrame.setVisible(True)
             self.videoLabel.setText("")
             self.faceDetectionWidget = FaceDetectionWidget()
             self.videoPlayer = VideoPlayer()
@@ -44,23 +51,28 @@ class EnrollStudent(QtWidgets.QMainWindow):
             self.videoPlayer.imageData.connect(imageDataSlot)
             self.videoLabel = self.faceDetectionWidget
 
-            output = "dataset/{}".format(studentName)
-            self.faceDetectionWidget.output = output
+            self.faceDetectionWidget.output = self.output
 
     def uploadImages(self):
-        pass
+        if self.lineEdit.text() == "":
+            pass
+        else:
+            self.constructOutput()
+            dlg = QtWidgets.QFileDialog(self)
+            dlg.setFileMode(QtWidgets.QFileDialog.Directory)
+            facesDir = dlg.getExistingDirectory()
+            if not os.path.exists(self.output):
+                os.makedirs(self.output)
+            for imagePath in list(paths.list_images(facesDir)):
+                shutil.copy(imagePath, self.output)
 
     def register(self):
         self.registerLabel.setText("Registering...")
-        dataset = self.faceDetectionWidget.output
-        encodings = "output/encodings2.pickle"
-        csv = "output/attendance.csv"
-        prototxt = "model/deploy.prototxt.txt"
-        model = "model/res10_300x300_ssd_iter_140000.caffemodel"
         os.system("python encode_faces.py --dataset {} --encodings {} --csv {} --prototxt {} --model {}".format(
-            dataset, encodings, csv, prototxt, model))
+            self.output, self.encodings, self.csv, self.prototxt, self.model))
+        registeredFaces = len(list(paths.list_images(self.output)))
         self.registerLabel.setText(
-            "{} student successful registered".format(self.faceDetectionWidget.total))
+            "{} student successful registered".format(registeredFaces))
 
     def back(self):
         from home import HomePage
@@ -84,6 +96,11 @@ class EnrollStudent(QtWidgets.QMainWindow):
         self.videoPlayer.camera.release()
         cv2.destroyAllWindows()
         self.videoFrame.close()
+
+    def constructOutput(self):
+        studentName = self.lineEdit.text()
+        studentName = studentName.replace(" ", "_")
+        self.output = "dataset/{}".format(studentName)
 
 
 if __name__ == '__main__':
