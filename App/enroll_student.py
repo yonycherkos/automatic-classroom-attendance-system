@@ -34,7 +34,7 @@ class EnrollStudent(QtWidgets.QMainWindow):
 
     def takeImages(self):
         if self.lineEdit.text() == "":
-            self.videoLabel.setText("Enter student full name!")
+            self.showDialog()
         else:
             self.constructOutput()
             self.videoFrame.setVisible(True)
@@ -55,7 +55,7 @@ class EnrollStudent(QtWidgets.QMainWindow):
 
     def uploadImages(self):
         if self.lineEdit.text() == "":
-            pass
+            self.showDialog()
         else:
             self.constructOutput()
             dlg = QtWidgets.QFileDialog(self)
@@ -102,6 +102,13 @@ class EnrollStudent(QtWidgets.QMainWindow):
         studentName = studentName.replace(" ", "_")
         self.output = "dataset/{}".format(studentName)
 
+    def showDialog(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Warning)
+        msg.setText("Enter student fullname")
+        msg.setWindowTitle("student name")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        msg.exec_()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
