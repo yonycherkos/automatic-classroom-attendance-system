@@ -103,7 +103,10 @@ class RegisterStudent(QtWidgets.QMainWindow):
         self.close()
 
     def viewAttendance(self):
-        pass
+        from view_attendance import ViewAttendance
+        self.ViewAttendance = ViewAttendance()
+        self.ViewAttendance.show()
+        self.close()
 
     def constructOutput(self):
         studentName = self.lineEdit.text()

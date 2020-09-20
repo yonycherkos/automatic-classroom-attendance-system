@@ -23,7 +23,10 @@ class HomePage(QtWidgets.QMainWindow):
         print("Take Attendance")
 
     def viewAttendance(self):
-        print("View Attendance")
+        from view_attendance import ViewAttendance
+        self.ViewAttendance = ViewAttendance()
+        self.ViewAttendance.show()
+        self.close()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
