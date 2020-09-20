@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from enroll_student import EnrollStudent
+from register_student import RegisterStudent
 from PyQt5 import uic
 import sys
 import os
@@ -10,13 +10,13 @@ class HomePage(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/home.ui", self)
-        self.enrollStudentBtn.clicked.connect(self.enrollStudent)
+        self.registerStudentBtn.clicked.connect(self.registerStudent)
         self.takeAttendanceBtn.clicked.connect(self.takeAttendance)
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
 
-    def enrollStudent(self):
-        self.enrollStudent = EnrollStudent()
-        self.enrollStudent.show()
+    def registerStudent(self):
+        self.registerStudent = RegisterStudent()
+        self.registerStudent.show()
         self.close()
 
     def takeAttendance(self):
