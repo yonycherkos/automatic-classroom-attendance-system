@@ -3,14 +3,14 @@ sys.path.append(".")
 sys.path.append("./App/widgets")
 sys.path.append("./App/utils")
 
-from face_detection_widget import FaceDetectionWidget
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QApplication
-from video_recorder import VideoRecorder
-from imutils import paths
-from PyQt5 import uic
-import shutil
-import cv2
 import os
+import cv2
+import shutil
+from PyQt5 import uic
+from imutils import paths
+from video_recorder import VideoRecorder
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QApplication
+from face_detection_widget import FaceDetectionWidget
 
 
 class RegisterStudent(QMainWindow):
@@ -70,7 +70,6 @@ class RegisterStudent(QMainWindow):
                         displayText=displayText, windowTitle="Capture Images")
         print(displayText)
         self.videoFrame.close()
- 
 
     def uploadImages(self):
         if self.lineEdit.text() == "":
@@ -92,13 +91,21 @@ class RegisterStudent(QMainWindow):
                             displayText=displayText, windowTitle="Upload Images")
 
     def register(self):
-        self.registerLabel.setText("Registering...")
-        os.system("python face_recognizer/encode_faces.py --dataset {} --encodings {} --csv {} --prototxt {} --model {}".format(
-            self.output, self.encodings, self.csv, self.prototxt, self.model))
-        displayText = "{} successful registered".format(self.lineEdit.text())
-        self.showDialog(icon=QMessageBox.Information,
-                        displayText=displayText, windowTitle="Register Student")
-        self.registerLabel.setText(displayText)
+        if self.lineEdit.text() == "":
+            self.showDialog(icon=QMessageBox.Warning,
+                            displayText="Enter student fullname", windowTitle="Student Name")
+        elif not os.path.exists(self.output):
+            self.showDialog(icon=QMessageBox.Warning,
+                            displayText="take or upload face images for {}".format(self.lineEdit.text()), windowTitle="face images doesn't exists")
+        else:
+            self.registerLabel.setText("Registering...")
+            os.system("python face_recognizer/encode_faces.py --dataset {} --encodings {} --csv {} --prototxt {} --model {}".format(
+                self.output, self.encodings, self.csv, self.prototxt, self.model))
+            displayText = "{} successful registered".format(
+                self.lineEdit.text())
+            self.showDialog(icon=QMessageBox.Information,
+                            displayText=displayText, windowTitle="Register Student")
+            self.registerLabel.setText(displayText)
 
     def back(self):
         from home import HomePage
