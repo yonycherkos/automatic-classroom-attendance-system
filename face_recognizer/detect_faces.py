@@ -6,7 +6,7 @@ import imutils
 import time
 import cv2
 
-def face_detection(image, prototxt, model, min_confidence):
+def face_detection(image, prototxt, model, min_confidence=0.5):
     (h, w) = image.shape[:2]
 
     # note: we need to resize to image to the desired size
