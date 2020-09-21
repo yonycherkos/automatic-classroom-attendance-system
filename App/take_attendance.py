@@ -1,15 +1,16 @@
 import sys
 sys.path.append(".")
 
-import os
-import cv2
-import numpy as np
+from PyQt5.QtWidgets import QMainWindow, QLabel, QApplication
+from face_recognizer_widget import FaceRecognizerWidget
+from video_recorder import VideoRecorder
 from PyQt5 import uic
-from PyQt5 import QtCore, QtGui, QtWidgets
-from videoPlayer import VideoPlayer, FaceRecognizerWidget
+import numpy as np
+import cv2
+import os
 
 
-class TakeAttendance(QtWidgets.QMainWindow):
+class TakeAttendance(QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -25,18 +26,18 @@ class TakeAttendance(QtWidgets.QMainWindow):
         self.videoFrame.setVisible(True)
         self.videoLabel.setText("")
         self.faceRecognizerWidget = FaceRecognizerWidget()
-        self.videoPlayer = VideoPlayer()
-        self.videoPlayer.startRecording()
+        self.videoRecorder = VideoRecorder()
+        self.videoRecorder.startRecording()
         frameLayout = self.videoFrame.layout()
         frameLayout.replaceWidget(self.videoLabel, self.faceRecognizerWidget)
 
         # connect the image data signal and slot together
         imageDataSlot = self.faceRecognizerWidget.imageDataSlot
-        self.videoPlayer.imageData.connect(imageDataSlot)
+        self.videoRecorder.imageData.connect(imageDataSlot)
         self.videoLabel = self.faceRecognizerWidget
 
     def quit(self):
-        self.videoPlayer.camera.release()
+        self.videoRecorder.camera.release()
         cv2.destroyAllWindows()
         self.faceRecognizerWidget.saveDataframe()
         df = self.faceRecognizerWidget.df
@@ -46,7 +47,7 @@ class TakeAttendance(QtWidgets.QMainWindow):
         presentCount = df.iloc[:, -1].sum()
         displayText = "{} students present out of {} students. \n absent students: {}\n".format(
             presentCount, totalCount, absentNames)
-        displayLabel = QtWidgets.QLabel(displayText)
+        displayLabel = QLabel(displayText)
         frameLayout = self.videoFrame.layout()
         frameLayout.replaceWidget(self.videoLabel, displayLabel)
         self.quitBtn.close()
@@ -65,7 +66,7 @@ class TakeAttendance(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     window = TakeAttendance()
     window.show()
     app.exec_()

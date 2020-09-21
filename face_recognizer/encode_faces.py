@@ -80,3 +80,5 @@ else:
     print("[INFO] storing student names in a dataframe...")
     df = pd.DataFrame({"names": sorted(list(set(KnowNames)))})
     df.to_csv(args["csv"])
+
+# TODO: modularize and refactore code.
