@@ -1,11 +1,16 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from register_student import RegisterStudent
-from PyQt5 import uic
 import sys
+sys.path.append(".")
+sys.path.append("./App/pages")
+
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from register_student import RegisterStudent
+from take_attendance import TakeAttendance
+from view_attendance import ViewAttendance
+from PyQt5 import uic
 import os
 
 
-class HomePage(QtWidgets.QMainWindow):
+class HomePage(QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,19 +25,18 @@ class HomePage(QtWidgets.QMainWindow):
         self.close()
 
     def takeAttendance(self):
-        from take_attendance import TakeAttendance
         self.takeAttendance = TakeAttendance()
         self.takeAttendance.show()
         self.close()
 
     def viewAttendance(self):
-        from view_attendance import ViewAttendance
         self.viewAttendance = ViewAttendance()
         self.viewAttendance.show()
         self.close()
 
+
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     window = HomePage()
     window.show()
     app.exec_()

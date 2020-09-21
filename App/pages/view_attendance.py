@@ -1,10 +1,11 @@
-from PyQt5 import QtWidgets
-from PyQt5 import uic
-import pandas as pd
 import sys
 sys.path.append(".")
 
-class ViewAttendance(QtWidgets.QMainWindow):
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QApplication
+from PyQt5 import uic
+import pandas as pd
+
+class ViewAttendance(QMainWindow):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,7 +18,7 @@ class ViewAttendance(QtWidgets.QMainWindow):
         self.table.setHorizontalHeaderLabels(df.columns)
         for (i, row) in enumerate(df.values):
             for (j, data) in enumerate(row):
-                self.table.setItem(i, j, QtWidgets.QTableWidgetItem(str(data)))
+                self.table.setItem(i, j, QTableWidgetItem(str(data)))
 
     def back(self):
         from home import HomePage
@@ -26,7 +27,7 @@ class ViewAttendance(QtWidgets.QMainWindow):
         self.close()
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     window = ViewAttendance()
     window.show()
     app.exec_()

@@ -1,5 +1,7 @@
 import sys
 sys.path.append(".")
+sys.path.append("./App/widgets")
+sys.path.append("./App/utils")
 
 from face_detection_widget import FaceDetectionWidget
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QApplication

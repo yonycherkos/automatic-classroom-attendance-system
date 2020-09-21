@@ -1,5 +1,7 @@
 import sys
 sys.path.append(".")
+sys.path.append("./App/widgets")
+sys.path.append("./App/utils")
 
 from PyQt5.QtWidgets import QMainWindow, QLabel, QApplication
 from face_recognizer_widget import FaceRecognizerWidget
