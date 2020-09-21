@@ -43,7 +43,6 @@ class RegisterStudent(QMainWindow):
         else:
             self.constructOutput()
             self.videoFrame.setVisible(True)
-            self.videoLabel.setText("")
             self.faceDetectionWidget = FaceDetectionWidget()
             self.videoRecorder = VideoRecorder()
             self.videoRecorder.startRecording()

@@ -27,9 +27,9 @@ class FaceRecognizerWidget(QWidget):
 
     def imageDataSlot(self, imageData):
         orig = imageData.copy()
-        # imageData = imutils.resize(imageData, width=750)
-        # ratio = imageData.shape[1] / float(rgb.shape[1])
-        ratio = 1
+        imageData = imutils.resize(imageData, width=750)
+        ratio = imageData.shape[1] / float(imageData.shape[1])
+        # ratio = 1
 
         (boxes, encodings) = encodeFace(imageData, self.prototxt, self.model)
         names = matchFace(encodings, self.data, self.faceCounter)

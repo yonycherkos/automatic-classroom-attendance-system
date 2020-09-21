@@ -26,7 +26,6 @@ class TakeAttendance(QMainWindow):
 
     def takeAttendance(self):
         self.videoFrame.setVisible(True)
-        self.videoLabel.setText("")
         self.faceRecognizerWidget = FaceRecognizerWidget()
         self.videoRecorder = VideoRecorder()
         self.videoRecorder.startRecording()

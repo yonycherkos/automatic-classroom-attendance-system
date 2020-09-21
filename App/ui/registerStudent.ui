@@ -51,43 +51,6 @@
          <height>25</height>
         </rect>
        </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
-       </property>
        <property name="text">
         <string>Back</string>
        </property>
@@ -100,43 +63,6 @@
          <width>371</width>
          <height>25</height>
         </rect>
-       </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
        </property>
        <property name="text">
         <string>View Attendance</string>
@@ -161,43 +87,6 @@
          <height>25</height>
         </rect>
        </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
-       </property>
        <property name="text">
         <string>Take Images</string>
        </property>
@@ -210,70 +99,6 @@
          <width>371</width>
          <height>25</height>
         </rect>
-       </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>239</red>
-             <green>235</green>
-             <blue>231</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>239</red>
-             <green>235</green>
-             <blue>231</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>190</red>
-             <green>190</green>
-             <blue>190</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
        </property>
        <property name="text">
         <string>Upload Images</string>
@@ -303,43 +128,6 @@
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="1" column="0">
          <widget class="QPushButton" name="captureBtn">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>136</red>
-                <green>138</green>
-                <blue>133</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>136</red>
-                <green>138</green>
-                <blue>133</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>136</red>
-                <green>138</green>
-                <blue>133</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
           <property name="text">
            <string>Capture</string>
           </property>
@@ -347,43 +135,6 @@
         </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="quitBtn">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>136</red>
-                <green>138</green>
-                <blue>133</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>136</red>
-                <green>138</green>
-                <blue>133</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>136</red>
-                <green>138</green>
-                <blue>133</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
           <property name="text">
            <string>Quit</string>
           </property>
@@ -418,43 +169,6 @@
          <width>371</width>
          <height>25</height>
         </rect>
-       </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>136</red>
-             <green>138</green>
-             <blue>133</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
        </property>
        <property name="text">
         <string>Register</string>
