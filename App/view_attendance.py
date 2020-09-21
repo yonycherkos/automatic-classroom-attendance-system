@@ -10,7 +10,7 @@ class ViewAttendance(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/viewAttendance.ui", self)
         self.backBtn.clicked.connect(self.back)
-        df = pd.read_csv("output/attendance.csv")
+        df = pd.read_csv("output/attendance.csv", index_col=0)
 
         self.table.setRowCount(df.shape[0])
         self.table.setColumnCount(df.shape[1])

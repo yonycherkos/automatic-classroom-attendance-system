@@ -20,12 +20,15 @@ class HomePage(QtWidgets.QMainWindow):
         self.close()
 
     def takeAttendance(self):
-        print("Take Attendance")
+        from take_attendance import TakeAttendance
+        self.takeAttendance = TakeAttendance()
+        self.takeAttendance.show()
+        self.close()
 
     def viewAttendance(self):
         from view_attendance import ViewAttendance
-        self.ViewAttendance = ViewAttendance()
-        self.ViewAttendance.show()
+        self.viewAttendance = ViewAttendance()
+        self.viewAttendance.show()
         self.close()
 
 if __name__ == "__main__":
