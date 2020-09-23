@@ -1,7 +1,7 @@
 import sys
 sys.path.append(".")
 
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QApplication
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QApplication, QHeaderView
 from PyQt5 import uic
 import pandas as pd
 
@@ -16,9 +16,13 @@ class ViewAttendance(QMainWindow):
         self.table.setRowCount(df.shape[0])
         self.table.setColumnCount(df.shape[1])
         self.table.setHorizontalHeaderLabels(df.columns)
+        self.table.horizontalHeader().setStretchLastSection(True);
         for (i, row) in enumerate(df.values):
             for (j, data) in enumerate(row):
                 self.table.setItem(i, j, QTableWidgetItem(str(data)))
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)       
+        header.setSectionResizeMode(0, QHeaderView.Stretch)
 
     def back(self):
         from home import HomePage
