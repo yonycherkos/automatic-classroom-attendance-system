@@ -35,3 +35,6 @@ if __name__ == '__main__':
     window = ViewAttendance()
     window.show()
     app.exec_()
+
+# TODO: color student rows with normal, warning, and danger
+# TODO: add search bar to search and display student info's

@@ -43,7 +43,7 @@ class FaceRecognizerWidget(QWidget):
 
     def saveDataframe(self):
         self.faceCounter = {key: 1 if value >=30 else 0 for(key, value) in self.faceCounter.items()}
-        date_col = datetime.now().strftime("%a, %b %d, %Y %H:%M")
+        date_col = datetime.now().strftime("%A, %b %d, %Y %H:%M")
         self.df[date_col] = self.df["names"].map(lambda name: self.faceCounter[name])
         self.df.to_csv(self.csv)
 
