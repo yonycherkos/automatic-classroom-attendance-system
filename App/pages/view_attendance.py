@@ -13,6 +13,7 @@ class ViewAttendance(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/viewAttendance.ui", self)
+        self.filterComboBox.activated[str].connect(self.filter)
         self.searchBtn.clicked.connect(self.search)
         self.backBtn.clicked.connect(self.back)
         self.df = pd.read_csv("output/attendance.csv", index_col=0)
@@ -33,14 +34,40 @@ class ViewAttendance(QMainWindow):
                 self.displayTable()
                 self.detail()
 
+    def filter(self, selected):
+        self.df = pd.read_csv("output/attendance.csv", index_col=0)
+        if selected == "Good":
+            attend_frac = self.df.sum(axis=1)/self.df.shape[1]
+            self.df = self.df[attend_frac >= 0.9]
+        elif selected == "Warning":
+            attend_frac = self.df.sum(axis=1)/self.df.shape[1]
+            self.df =  self.df[(attend_frac >= 0.8) & (attend_frac < 0.9)]
+        elif selected == "Danger":
+            attend_frac = self.df.sum(axis=1)/self.df.shape[1]
+            self.df = self.df[attend_frac < 0.8]
+        else:
+            self.df = pd.read_csv("output/attendance.csv", index_col=0)
+        self.detailLabel.close()
+        self.displayTable()
+
     def displayTable(self):
         self.table.setRowCount(self.df.shape[0])
         self.table.setColumnCount(self.df.shape[1])
         self.table.setHorizontalHeaderLabels(self.df.columns)
         self.table.horizontalHeader().setStretchLastSection(True)
+
         counts = list(self.df.sum(axis=1)/self.df.shape[1])
+        colorMap = {"Good": QtGui.QColor(0, 255, 0, 150), "Warning": QtGui.QColor(
+            255, 255, 0, 150), "Danger": QtGui.QColor(255, 0, 0, 150)}
+
         for (i, row) in enumerate(self.df.values):
-            color = QtGui.QColor(0, 255, 0, 150) if counts[i] >= 0.8 else QtGui.QColor(255, 0, 0, 150)
+            if counts[i] >= 0.9:
+                color = colorMap["Good"]
+            elif counts[i] >= 0.8:
+                color = colorMap["Warning"]
+            else:
+                color = colorMap["Danger"]
+
             for (j, data) in enumerate(row):
                 self.table.setItem(i, j, QTableWidgetItem(str(data)))
                 self.table.item(i, j).setBackground(color)
@@ -59,9 +86,10 @@ class ViewAttendance(QMainWindow):
             attend_count = list(self.df.sum(axis=1))[row]
             num_classes = self.df.shape[1]
             attend_frac = np.round(attend_count/num_classes, 2)
-            displayText = "name: {}\n absent: {}/{} classes\n attendance: {}%".format(
+            displayText = "name: {}\nabsent: {}/{} classes\nattendance: {}%".format(
                 name, (num_classes - attend_count), num_classes, attend_frac*100)
             self.detailLabel.setText(displayText)
+            self.detailLabel.show()
 
     def back(self):
         from home import HomePage
@@ -83,5 +111,3 @@ if __name__ == '__main__':
     window = ViewAttendance()
     window.show()
     app.exec_()
-
-# TODO: add filter dropdown to filter student
