@@ -107,12 +107,18 @@ class RegisterStudent(QMainWindow):
             self.registerLabel.setText(displayText)
 
     def back(self):
+        if self.videoRecorder.camera is not None:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
         from home import HomePage
         self.homePage = HomePage()
         self.homePage.show()
         self.close()
 
     def viewAttendance(self):
+        if self.videoRecorder.camera is not None:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
         from view_attendance import ViewAttendance
         self.ViewAttendance = ViewAttendance()
         self.ViewAttendance.show()

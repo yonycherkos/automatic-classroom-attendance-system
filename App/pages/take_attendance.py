@@ -24,6 +24,8 @@ class TakeAttendance(QMainWindow):
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
         self.backBtn.clicked.connect(self.back)
 
+        self.cameraOn = False
+
     def takeAttendance(self):
         self.videoFrame.setVisible(True)
         self.faceRecognizerWidget = FaceRecognizerWidget()
@@ -37,9 +39,12 @@ class TakeAttendance(QMainWindow):
         self.videoRecorder.imageData.connect(imageDataSlot)
         self.videoLabel = self.faceRecognizerWidget
 
+        self.cameraOn = True
+
     def quit(self):
         self.videoRecorder.camera.release()
         cv2.destroyAllWindows()
+        self.cameraOn = False
         self.faceRecognizerWidget.saveDataframe()
         df = self.faceRecognizerWidget.df
         absentNames = list(df[df.iloc[:, -1] == 0]["names"])
@@ -54,12 +59,20 @@ class TakeAttendance(QMainWindow):
         self.quitBtn.close()
 
     def back(self):
+        if self.cameraOn:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
+            self.cameraOn = False
         from home import HomePage
         self.homePage = HomePage()
         self.homePage.show()
         self.close()
 
     def viewAttendance(self):
+        if self.cameraOn:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
+            self.cameraOn = False
         from view_attendance import ViewAttendance
         self.ViewAttendance = ViewAttendance()
         self.ViewAttendance.show()
