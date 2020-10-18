@@ -60,7 +60,8 @@ class ViewAttendance(QMainWindow):
         colorMap = {"Good": QtGui.QColor(0, 255, 0, 150), "Warning": QtGui.QColor(
             255, 255, 0, 150), "Danger": QtGui.QColor(255, 0, 0, 150)}
 
-        for (i, row) in enumerate(self.df.values):
+        df = self.df.replace({0: "absent", 1: "present"})
+        for (i, row) in enumerate(df.values):
             if counts[i] >= 0.9:
                 color = colorMap["Good"]
             elif counts[i] >= 0.8:
