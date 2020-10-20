@@ -1,11 +1,14 @@
+import sys
+sys.path.append(".")
+sys.path.append("./App/utils")
+
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QApplication, QHeaderView, QMessageBox
 from PyQt5.QtCore import QModelIndex
 from PyQt5 import QtGui
 from PyQt5 import uic
 import pandas as pd
 import numpy as np
-import sys
-sys.path.append(".")
+import config
 
 
 class ViewAttendance(QMainWindow):
@@ -13,14 +16,19 @@ class ViewAttendance(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/viewAttendance.ui", self)
+        self.setCentralWidget(self.viewAttendancePage)
+
         self.filterComboBox.activated[str].connect(self.filter)
         self.searchBtn.clicked.connect(self.search)
         self.backBtn.clicked.connect(self.back)
-        self.df = pd.read_csv("output/attendance.csv", index_col=0)
+
+        self.attendance = config.ATTENDANCE_PATH
+
+        self.df = pd.read_csv(self.attendance, index_col=0)
         self.displayTable()
 
     def search(self):
-        self.df = pd.read_csv("output/attendance.csv", index_col=0)
+        self.df = pd.read_csv(self.attendance, index_col=0)
         if self.searchText.text() == "":
             self.showDialog(icon=QMessageBox.Warning,
                             displayText="Enter student fullname", windowTitle="Search Name")
@@ -35,7 +43,7 @@ class ViewAttendance(QMainWindow):
                 self.detail()
 
     def filter(self, selected):
-        self.df = pd.read_csv("output/attendance.csv", index_col=0)
+        self.df = pd.read_csv(self.attendance, index_col=0)
         if selected == "Good":
             attend_frac = self.df.sum(axis=1)/self.df.shape[1]
             self.df = self.df[attend_frac >= 0.9]
@@ -46,7 +54,7 @@ class ViewAttendance(QMainWindow):
             attend_frac = self.df.sum(axis=1)/self.df.shape[1]
             self.df = self.df[attend_frac < 0.8]
         else:
-            self.df = pd.read_csv("output/attendance.csv", index_col=0)
+            self.df = pd.read_csv(self.attendance, index_col=0)
         self.detailLabel.close()
         self.displayTable()
 
