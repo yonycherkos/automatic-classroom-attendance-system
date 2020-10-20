@@ -42,9 +42,7 @@ class TakeAttendance(QMainWindow):
         self.cameraOn = True
 
     def quit(self):
-        self.videoRecorder.camera.release()
-        cv2.destroyAllWindows()
-        self.cameraOn = False
+        self.closeCamera()
         self.faceRecognizerWidget.saveDataframe()
         df = self.faceRecognizerWidget.df
         absentNames = list(df[df.iloc[:, -1] == 0]["names"])
@@ -60,9 +58,7 @@ class TakeAttendance(QMainWindow):
 
     def back(self):
         if self.cameraOn:
-            self.videoRecorder.camera.release()
-            cv2.destroyAllWindows()
-            self.cameraOn = False
+            self.closeCamera()
         from home import HomePage
         self.homePage = HomePage()
         self.homePage.show()
@@ -70,13 +66,16 @@ class TakeAttendance(QMainWindow):
 
     def viewAttendance(self):
         if self.cameraOn:
-            self.videoRecorder.camera.release()
-            cv2.destroyAllWindows()
-            self.cameraOn = False
+            self.closeCamera()
         from view_attendance import ViewAttendance
         self.ViewAttendance = ViewAttendance()
         self.ViewAttendance.show()
         self.close()
+
+    def closeCamera(self):
+        self.videoRecorder.camera.release()
+        cv2.destroyAllWindows()
+        self.cameraOn = False
 
 
 if __name__ == '__main__':
