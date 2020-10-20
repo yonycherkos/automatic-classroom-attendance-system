@@ -56,7 +56,7 @@
    <string>HomePage</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="homePage">
     <property name="geometry">
      <rect>
       <x>0</x>

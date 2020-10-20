@@ -15,6 +15,7 @@ class HomePage(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/home.ui", self)
+        self.setCentralWidget(self.homePage)
         self.registerStudentBtn.clicked.connect(self.registerStudent)
         self.takeAttendanceBtn.clicked.connect(self.takeAttendance)
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)

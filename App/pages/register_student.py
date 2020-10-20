@@ -20,6 +20,7 @@ class RegisterStudent(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/registerStudent.ui", self)
+        self.setCentralWidget(self.RegistrationPage)
         self.videoFrame.setVisible(False)
 
         self.takeImagesBtn.clicked.connect(self.takeImages)

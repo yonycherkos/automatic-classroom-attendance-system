@@ -14,7 +14,7 @@
    <string>View Attendance</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="attendancePage">
+   <widget class="QFrame" name="viewAttendancePage">
     <property name="geometry">
      <rect>
       <x>9</x>

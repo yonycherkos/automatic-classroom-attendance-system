@@ -17,6 +17,7 @@ class TakeAttendance(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/takeAttendance.ui", self)
+        self.setCentralWidget(self.takeAttendancePage)
         self.videoFrame.setVisible(False)
 
         self.takeAttendanceBtn.clicked.connect(self.takeAttendance)
@@ -44,16 +45,12 @@ class TakeAttendance(QMainWindow):
     def quit(self):
         self.closeCamera()
         self.faceRecognizerWidget.saveDataframe()
-        df = self.faceRecognizerWidget.df
-        absentNames = list(df[df.iloc[:, -1] == 0]["names"])
-        absentNames = " ".join(absentNames).replace(" ", ", ")
-        totalCount = len(df.iloc[:, -1])
-        presentCount = df.iloc[:, -1].sum()
-        displayText = "{} students present out of {} students. \n absent students: {}\n".format(
-            presentCount, totalCount, absentNames)
+        self.videoLabel.hide()
+        displayText = self.constructDisplayText()
         displayLabel = QLabel(displayText)
         frameLayout = self.videoFrame.layout()
         frameLayout.replaceWidget(self.videoLabel, displayLabel)
+        self.videoLabel.show()
         self.quitBtn.close()
 
     def back(self):
@@ -71,6 +68,22 @@ class TakeAttendance(QMainWindow):
         self.ViewAttendance = ViewAttendance()
         self.ViewAttendance.show()
         self.close()
+
+    def constructDisplayText(self):
+        df = self.faceRecognizerWidget.df
+        absentNames = list(df[df.iloc[:, -1] == 0]["names"])
+        totalCount = len(df.iloc[:, -1])
+        presentCount = df.iloc[:, -1].sum()
+
+        absentNames = ["{}, {}".format(i + 1, name)  for (i, name) in enumerate(absentNames)]
+        absentNameString = ""
+        for i in np.arange(0, len(absentNames), 3):
+            newAbsentNameString = "  ".join(absentNames[i:i + 3])
+            absentNameString = "{}\t{}\n".format(absentNameString, newAbsentNameString)
+
+        displayText = "{} students present out of {} students. \n\n absent students: \n{}".format(
+            presentCount, totalCount, absentNameString)
+        return displayText       
 
     def closeCamera(self):
         self.videoRecorder.camera.release()
