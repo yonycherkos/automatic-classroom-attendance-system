@@ -15,44 +15,49 @@ import time
 import cv2
 import os
 
-def encodeFace(image, prototxt, model):
-    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    (boxes, confidences) = face_detection(image=image, prototxt=prototxt, model=model)
-    boxes = [(box[1], box[2], box[3], box[0]) for (i, box) in enumerate(boxes)]
-    encodings = face_recognition.face_encodings(rgb, boxes)
-    return (boxes, encodings)
+class FaceRecognizer():
+    def __init__(self, prototxt, model):
+        self.prototxt = prototxt
+        self.model = model
 
-def matchFace(encodings, data, faceCounter):
-    names = []
-    for encoding in encodings:
-        matches = face_recognition.compare_faces(
-            data["encodings"], encoding, tolerance=0.5)
-        name = "Unknown"
-        if True in matches:
-            matchIdxs = [i for (i, match) in enumerate(matches) if match]
-            counts = {}
-            for i in matchIdxs:
-                name = data["names"][i]
-                counts[name] = counts.get(name, 0) + 1
-            name = max(counts, key=counts.get)
-            faceCounter[name] = faceCounter.get(name, 0) + 1
-        names.append(name)
-    return names
+    def encodeFace(self, image):
+        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        (boxes, confidences) = face_detection(image, self.prototxt, self.model)
+        boxes = [(box[1], box[2], box[3], box[0]) for (i, box) in enumerate(boxes)]
+        encodings = face_recognition.face_encodings(rgb, boxes)
+        return (boxes, encodings)
 
-def drawFaceBB(image, boxes, names, ratio = 1):
-    for ((top, right, bottom, left), name) in zip(boxes, names):
-        # resize the bounding boxes
-        top = int(top * ratio)
-        right = int(right * ratio)
-        bottom = int(bottom * ratio)
-        left = int(left * ratio)
+    def matchFace(self, encodings, data, faceCounter):
+        names = []
+        for encoding in encodings:
+            matches = face_recognition.compare_faces(
+                data["encodings"], encoding, tolerance=0.5)
+            name = "Unknown"
+            if True in matches:
+                matchIdxs = [i for (i, match) in enumerate(matches) if match]
+                counts = {}
+                for i in matchIdxs:
+                    name = data["names"][i]
+                    counts[name] = counts.get(name, 0) + 1
+                name = max(counts, key=counts.get)
+                faceCounter[name] = faceCounter.get(name, 0) + 1
+            names.append(name)
+        return names
 
-        # draw the predicted face name on the frame
-        cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
-        y = top - 15 if top - 15 > 15 else top + 15
-        cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.75, (0, 255, 0), 2)
-    return image
+    def drawFaceBB(self, image, boxes, names, ratio = 1):
+        for ((top, right, bottom, left), name) in zip(boxes, names):
+            # resize the bounding boxes
+            top = int(top * ratio)
+            right = int(right * ratio)
+            bottom = int(bottom * ratio)
+            left = int(left * ratio)
+
+            # draw the predicted face name on the frame
+            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
+            y = top - 15 if top - 15 > 15 else top + 15
+            cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
+                        0.75, (0, 255, 0), 2)
+        return image
 
 if __name__ == "__main__":
     # construct argument parser and parse arguments
@@ -66,6 +71,9 @@ if __name__ == "__main__":
     # ap.add_argument("-d", "--detection_method", default="hog",
     #                 type=str, help="detection method to use 'hog' or 'cnn' ")
     args = vars(ap.parse_args())
+
+    # instanciate face recognizer
+    faceRecognizer = FaceRecognizer(args["prototxt"], args["model"])
 
     # load face encodings
     print("[INFO] loading encodings...")
@@ -88,9 +96,10 @@ if __name__ == "__main__":
         frame = imutils.resize(frame, width=750)
         ratio = frame.shape[1] / float(frame.shape[1])
 
-        (boxes, encodings) = encodeFace(frame, args["prototxt"], args["model"])
-        names = matchFace(encodings, data)
-        frame = drawFaceBB(frame, boxes, names, ratio)
+
+        (boxes, encodings) = faceRecognizer.encodeFace(frame)
+        names = faceRecognizer.matchFace(encodings, data, faceCounter)
+        frame = faceRecognizer.drawFaceBB(frame, boxes, names, ratio)
 
         # save the frame
         if writer is None and args["output"] is not None:
@@ -113,8 +122,8 @@ if __name__ == "__main__":
     date_col = datetime.now().strftime("%Y-%m-%d %H:%M")
     df = pd.read_csv(args["csv"], index_col=0)
     df[date_col] = df["names"].map(lambda name: faceCounter[name])
-    print("[INOF] writing attendance result to the csv file...")
-    df.to_csv(args["csv"])
+    # print("[INOF] writing attendance result to the csv file...")
+    # df.to_csv(args["csv"])
     print(df)
 
     # cleaning up
@@ -124,8 +133,6 @@ if __name__ == "__main__":
 
     if writer is not None:
         writer.release()
-
-# TODO: modularize and refactore code.
 
 # Futur works
 # TODO: add face alignmnt
