@@ -3,14 +3,16 @@ sys.path.append(".")
 sys.path.append("./App/widgets")
 sys.path.append("./App/utils")
 
-from face_detection_widget import FaceDetectionWidget
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QApplication
-from video_recorder import VideoRecorder
-from imutils import paths
-from PyQt5 import uic
-import shutil
-import cv2
 import os
+import cv2
+import shutil
+import config
+from PyQt5 import uic
+from imutils import paths
+from video_recorder import VideoRecorder
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QApplication
+from face_detection_widget import FaceDetectionWidget
+from face_recognizer.face_encoder import FaceEncoder
 
 
 class RegisterStudent(QMainWindow):
@@ -18,6 +20,7 @@ class RegisterStudent(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/registerStudent.ui", self)
+        self.setCentralWidget(self.RegistrationPage)
         self.videoFrame.setVisible(False)
 
         self.takeImagesBtn.clicked.connect(self.takeImages)
@@ -31,10 +34,14 @@ class RegisterStudent(QMainWindow):
         self.capturedFaces = 0
         self.output = ""
 
-        self.encodings = "output/encodings2.pickle"
-        self.csv = "output/attendance.csv"
-        self.prototxt = "model/deploy.prototxt.txt"
-        self.model = "model/res10_300x300_ssd_iter_140000.caffemodel"
+        self.dataset = config.DATASET
+        self.encodings = config.ENCODINGS_PATH
+        self.attendance = config.ATTENDANCE_PATH
+        self.prototxt = config.PROTOTXT_PATH
+        self.model = config.MODEL_PATH
+
+        self.capturedFacesCount = 0
+        self.cameraOn = False
 
     def takeImages(self):
         if self.lineEdit.text() == "":
@@ -42,8 +49,8 @@ class RegisterStudent(QMainWindow):
                             displayText="Enter student fullname", windowTitle="Student Name")
         else:
             self.constructOutput()
+            self.cameraOn = True
             self.videoFrame.setVisible(True)
-            self.videoLabel.setText("")
             self.faceDetectionWidget = FaceDetectionWidget()
             self.videoRecorder = VideoRecorder()
             self.videoRecorder.startRecording()
@@ -59,18 +66,19 @@ class RegisterStudent(QMainWindow):
 
     def capture(self):
         self.faceDetectionWidget.capture = True
+        self.capturedFacesCount += 1
+        self.registerLabel.setText("Captured {} faces".format(self.capturedFacesCount))
 
     def quit(self):
         self.videoRecorder.camera.release()
         cv2.destroyAllWindows()
+        self.cameraOn = False
 
-        capturedFaces = len(list(paths.list_images(self.output)))
-        displayText = "{} faces captured".format(capturedFaces)
+        displayText = "{} faces captured".format(self.capturedFacesCount)
         self.showDialog(icon=QMessageBox.Information,
                         displayText=displayText, windowTitle="Capture Images")
         print(displayText)
         self.videoFrame.close()
- 
 
     def uploadImages(self):
         if self.lineEdit.text() == "":
@@ -92,21 +100,42 @@ class RegisterStudent(QMainWindow):
                             displayText=displayText, windowTitle="Upload Images")
 
     def register(self):
-        self.registerLabel.setText("Registering...")
-        os.system("python face_recognizer/encode_faces.py --dataset {} --encodings {} --csv {} --prototxt {} --model {}".format(
-            self.output, self.encodings, self.csv, self.prototxt, self.model))
-        displayText = "{} successful registered".format(self.lineEdit.text())
-        self.showDialog(icon=QMessageBox.Information,
-                        displayText=displayText, windowTitle="Register Student")
-        self.registerLabel.setText(displayText)
+        if self.lineEdit.text() == "":
+            self.showDialog(icon=QMessageBox.Warning,
+                            displayText="Enter student fullname", windowTitle="Student Name")
+        elif not os.path.exists(self.output):
+            self.showDialog(icon=QMessageBox.Warning,
+                            displayText="take or upload face images for {}".format(self.lineEdit.text()), windowTitle="face images doesn't exists")
+        else:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
+            self.cameraOn = False
+            self.registerLabel.setText("Registering...")
+
+            # encode faces
+            self.face_encoder = FaceEncoder(self.output, self.encodings, self.attendance, self.prototxt, self.model)
+            self.face_encoder.encode_faces()
+            self.face_encoder.save_face_encodings()
+
+            displayText = "{} successful registered".format(
+                self.lineEdit.text())
+            self.showDialog(icon=QMessageBox.Information,
+                            displayText=displayText, windowTitle="Register Student")
+            self.registerLabel.setText(displayText)
 
     def back(self):
+        if self.cameraOn:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
         from home import HomePage
         self.homePage = HomePage()
         self.homePage.show()
         self.close()
 
     def viewAttendance(self):
+        if self.cameraOn:
+            self.videoRecorder.camera.release()
+            cv2.destroyAllWindows()
         from view_attendance import ViewAttendance
         self.ViewAttendance = ViewAttendance()
         self.ViewAttendance.show()
