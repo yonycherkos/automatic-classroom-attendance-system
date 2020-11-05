@@ -6,8 +6,11 @@ sys.path.append("./App/utils")
 from PyQt5.QtWidgets import QMainWindow, QLabel, QApplication
 from face_recognizer_widget import FaceRecognizerWidget
 from video_recorder import VideoRecorder
+from PyQt5.QtCore import QTimer
+from threading import Timer
 from PyQt5 import uic
 import numpy as np
+import config
 import cv2
 import os
 
@@ -25,9 +28,14 @@ class TakeAttendance(QMainWindow):
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
         self.backBtn.clicked.connect(self.back)
 
+        self.timer = QTimer()
+        self.timer.setInterval(config.CAPTURE_DURATION)
+        self.timer.timeout.connect(self.quit)
+
         self.cameraOn = False
 
     def takeAttendance(self):
+        self.timer.start()
         self.videoFrame.setVisible(True)
         self.faceRecognizerWidget = FaceRecognizerWidget()
         self.videoRecorder = VideoRecorder()

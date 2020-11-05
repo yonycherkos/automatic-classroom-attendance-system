@@ -1,5 +1,6 @@
 import sys
 sys.path.append(".")
+sys.path.append("./App/utils")
 
 from face_recognizer.recognize_faces_video import FaceRecognizer
 from PyQt5.QtGui import QImage, QPainter

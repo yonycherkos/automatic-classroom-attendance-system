@@ -1,9 +1,11 @@
 import sys
 sys.path.append(".")
+sys.path.append("./App/utils")
 
 from face_recognizer.detect_faces import face_detection
 from PyQt5.QtGui import QImage, QPainter
 from PyQt5.QtWidgets import QWidget
+import config
 import numpy as np
 import cv2
 import os
@@ -12,8 +14,8 @@ class FaceDetectionWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.image = QImage()
-        self.prototxt = "model/deploy.prototxt.txt"
-        self.model = "model/res10_300x300_ssd_iter_140000.caffemodel"
+        self.prototxt = config.PROTOTXT_PATH
+        self.model = config.MODEL_PATH
         self.output = ""
         self.capture = False
         self.total = 0
