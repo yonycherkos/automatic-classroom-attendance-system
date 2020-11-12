@@ -16,7 +16,6 @@ class ViewAttendance(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("App/ui/viewAttendance.ui", self)
-        self.setCentralWidget(self.viewAttendancePage)
 
         self.filterComboBox.activated[str].connect(self.filter)
         self.searchBtn.clicked.connect(self.search)
@@ -40,7 +39,6 @@ class ViewAttendance(QMainWindow):
                     name), windowTitle="Search Name")
             else:
                 self.displayTable()
-                self.detail()
 
     def filter(self, selected):
         self.df = pd.read_csv(self.attendance, index_col=0)
@@ -55,24 +53,26 @@ class ViewAttendance(QMainWindow):
             self.df = self.df[attend_frac < 0.8]
         else:
             self.df = pd.read_csv(self.attendance, index_col=0)
-        self.detailLabel.close()
         self.displayTable()
 
     def displayTable(self):
-        self.table.setRowCount(self.df.shape[0])
-        self.table.setColumnCount(self.df.shape[1])
-        self.table.setHorizontalHeaderLabels(self.df.columns)
-        self.table.horizontalHeader().setStretchLastSection(True)
-
-        counts = list(self.df.sum(axis=1)/self.df.shape[1])
+        counts = list(round(((self.df.sum(axis=1)/self.df.shape[1])*100), 2))
         colorMap = {"Good": QtGui.QColor(0, 255, 0, 150), "Warning": QtGui.QColor(
             255, 255, 0, 150), "Danger": QtGui.QColor(255, 0, 0, 150)}
 
-        df = self.df.replace({0: "absent", 1: "present"})
+        self.df['attend_percent'] = counts
+        df = self.df.loc[:, ['names', 'attend_percent']]
+        df = df.rename({'names': 'Student Name', 'attend_percent': 'Attendance Percentage'})
+
+        self.table.setRowCount(df.shape[0])
+        self.table.setColumnCount(df.shape[1])
+        self.table.setHorizontalHeaderLabels(df.columns)
+        self.table.horizontalHeader().setStretchLastSection(True)
+
         for (i, row) in enumerate(df.values):
-            if counts[i] >= 0.9:
+            if counts[i] >= 90:
                 color = colorMap["Good"]
-            elif counts[i] >= 0.8:
+            elif counts[i] >= 80:
                 color = colorMap["Warning"]
             else:
                 color = colorMap["Danger"]
@@ -83,22 +83,13 @@ class ViewAttendance(QMainWindow):
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
         header.setSectionResizeMode(0, QHeaderView.Stretch)
-        self.table.clicked.connect(self.detail)
+        self.table.clicked.connect(self.detailAttendance)
 
-    def detail(self):
-        if self.table.rowCount() == 1:
-            row = 0
-        else:
-            row = self.table.currentRow()
-        if row > -1:
-            name = self.table.item(row, 0).text()
-            attend_count = list(self.df.sum(axis=1))[row]
-            num_classes = self.df.shape[1]
-            attend_frac = np.round(attend_count/num_classes, 2)
-            displayText = "name: {}\nabsent: {}/{} classes\nattendance: {}%".format(
-                name, (num_classes - attend_count), num_classes, attend_frac*100)
-            self.detailLabel.setText(displayText)
-            self.detailLabel.show()
+    def detailAttendance(self):
+        from detail_attendance import DetailAttendance
+        self.detailAttendancePage = DetailAttendance(self.df, self.table.currentRow())
+        self.detailAttendancePage.show()
+        self.close()
 
     def back(self):
         from home import HomePage

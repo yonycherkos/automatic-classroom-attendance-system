@@ -1,137 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>viewAttendance</class>
- <widget class="QMainWindow" name="viewAttendance">
+ <class>viewAttendancePage</class>
+ <widget class="QMainWindow" name="viewAttendancePage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>783</height>
+    <width>823</width>
+    <height>669</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>View Attendance</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="viewAttendancePage">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>811</width>
-      <height>721</height>
+      <x>10</x>
+      <y>10</y>
+      <width>801</width>
+      <height>631</height>
      </rect>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>811</width>
-      <height>721</height>
-     </size>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
-      <widget class="QLabel" name="filterLabel">
-       <property name="text">
-        <string>Display Filters: </string>
-       </property>
-      </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Student Attendance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="filterLabel">
+             <property name="text">
+              <string>Display Filters: </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="filterComboBox">
+             <item>
+              <property name="text">
+               <string>All</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Good</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Warning</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Danger</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="searchText">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="searchBtn">
+             <property name="text">
+              <string>Search</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="table"/>
+       </item>
+      </layout>
      </item>
-     <item row="1" column="2">
-      <widget class="QLineEdit" name="searchText">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QPushButton" name="searchBtn">
-       <property name="text">
-        <string>Search</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" colspan="4">
-      <widget class="QTableWidget" name="table">
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustToContents</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="4">
+     <item>
       <widget class="QPushButton" name="backBtn">
        <property name="text">
         <string>Back</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Student Attendance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="filterComboBox">
-       <item>
-        <property name="text">
-         <string>All</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Good</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Warning</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Danger</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QLabel" name="detailLabel">
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>835</width>
-     <height>22</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
