@@ -6,7 +6,7 @@ import os
 import sqlite3
 from PyQt5 import uic
 from home import HomePage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit
 
 
 class LoginPage(QMainWindow):
@@ -15,6 +15,7 @@ class LoginPage(QMainWindow):
         uic.loadUi("App/ui/login.ui", self)
         self.loginBtn.clicked.connect(self.login)
         self.signupBtn.clicked.connect(self.signup)
+        self.passwordLineEdit.setEchoMode(QLineEdit.Password)
 
     def login(self):
         username = self.usernameLineEdit.text()
@@ -63,3 +64,5 @@ if __name__ == "__main__":
     window = LoginPage()
     window.show()
     app.exec_()
+
+# TODO: login on this device

@@ -2,12 +2,11 @@ import sys
 sys.path.append(".")
 sys.path.append("./App/pages")
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
-from login import LoginPage
-from home import HomePage
-from PyQt5 import uic
-import sqlite3
 import os
+import sqlite3
+from PyQt5 import uic
+from home import HomePage
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit
 
 
 class SignupPage(QMainWindow):
@@ -16,17 +15,25 @@ class SignupPage(QMainWindow):
         uic.loadUi("App/ui/signup.ui", self)
         self.signupBtn.clicked.connect(self.signup)
         self.backBtn.clicked.connect(self.back)
+        self.passwordLineEdit.setEchoMode(QLineEdit.Password)
+        self.confirmPasswordLineEdit.setEchoMode(QLineEdit.Password)
 
     def signup(self):
         fullname = self.fullnameLineEdit.text()
         username = self.usernameLineEdit.text()
         email = self.emailLineEdit.text()
         password = self.passwordLineEdit.text()
+        confirmPassword = self.confirmPasswordLineEdit.text()
 
         if (len(fullname) == 0 or len(username) == 0 or len(email) == 0 or len(password) == 0):
             displayText = "Required fields cannot be empty."
             self.showDialog(icon=QMessageBox.Warning,
                             displayText=displayText, windowTitle="Signup")
+        elif (password != confirmPassword):
+            displayText = "Password mismatch"
+            self.showDialog(icon=QMessageBox.Warning,
+                            displayText=displayText, windowTitle="Signup")
+            
         else:
             try:
                 connection = sqlite3.connect("output/login.db")
@@ -50,6 +57,7 @@ class SignupPage(QMainWindow):
                                 displayText=displayText, windowTitle="Signup")
 
     def back(self):
+        from login import LoginPage
         self.loginPage = LoginPage()
         self.loginPage.show()
         self.close()
