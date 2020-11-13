@@ -39,18 +39,22 @@ class SignupPage(QMainWindow):
                 connection = sqlite3.connect("output/login.db")
                 try:
                     connection.execute(
-                        "CREATE TABLE USERS (FULLNAME TEXT, USERNAME TEXT NOT NULL, EMAIL TEXT, PASSWORD TEXT NOT NULL)")
+                        "CREATE TABLE USERS (FULLNAME TEXT, USERNAME TEXT NOT NULL UNIQUE, EMAIL TEXT, PASSWORD TEXT NOT NULL)")
                 except:
                     pass
 
-                connection.execute(
-                    "INSERT INTO USERS VALUES (?, ?, ?, ?)", (fullname, username, email, password))
-                connection.commit()
-                connection.close()
+                try:
+                    connection.execute("INSERT INTO USERS VALUES (?, ?, ?, ?)", (fullname, username, email, password))
+                    connection.commit()
+                    connection.close()
                 
-                self.homePage = HomePage()
-                self.homePage.show()
-                self.close()
+                    self.homePage = HomePage()
+                    self.homePage.show()
+                    self.close()
+                except:
+                    displayText = "Duplicated user, {} already registered".format(username)
+                    self.showDialog(icon=QMessageBox.Warning,
+                                displayText=displayText, windowTitle="Signup")
             except:
                 displayText = "Error connecting to database"
                 self.showDialog(icon=QMessageBox.Warning,
@@ -76,6 +80,3 @@ if __name__ == "__main__":
     window = SignupPage()
     window.show()
     app.exec_()
-
-# TODO: make password invisible
-# TODO: avoid duplicate registration
