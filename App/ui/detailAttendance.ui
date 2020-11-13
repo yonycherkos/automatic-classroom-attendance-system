@@ -16,70 +16,76 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <widget class="QLabel" name="detailAttendanceLabel">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Detail Attendance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="detailAttendanceLabel">
+         <widget class="QLabel" name="studetnNameLabel">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Detail Attendance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+           <string> Student Name:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="studetnNameLabel">
-              <property name="text">
-               <string> Student Name:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="studentName">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="attendancePercentageLabel">
-              <property name="text">
-               <string>      Attendance Percentage:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="attendancePercentage">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
+         <widget class="QLabel" name="studentName">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="table"/>
+         <widget class="QLabel" name="attendancePercentageLabel">
+          <property name="text">
+           <string>      Attendance Percentage:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="attendancePercentage">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="backBtn">
-        <property name="text">
-         <string>Back</string>
-        </property>
-       </widget>
+       <widget class="QTableWidget" name="table"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="saveAsPdfBtn">
+          <property name="text">
+           <string>Save as PDF</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="updateChangesBtn">
+          <property name="text">
+           <string>Update Changes</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="backBtn">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>

@@ -2,13 +2,15 @@ import sys
 sys.path.append(".")
 sys.path.append("./App/utils")
 
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QApplication, QHeaderView, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QApplication, QHeaderView, QMessageBox, QFileDialog
 from PyQt5.QtCore import QModelIndex
 from PyQt5 import QtGui
 from PyQt5 import uic
 import pandas as pd
 import numpy as np
+import pdfkit
 import config
+import os
 
 
 class ViewAttendance(QMainWindow):
@@ -19,6 +21,7 @@ class ViewAttendance(QMainWindow):
 
         self.filterComboBox.activated[str].connect(self.filter)
         self.searchBtn.clicked.connect(self.search)
+        self.saveAsPdfBtn.clicked.connect(self.saveAsPdf)
         self.backBtn.clicked.connect(self.back)
 
         self.attendance = config.ATTENDANCE_PATH
@@ -62,7 +65,7 @@ class ViewAttendance(QMainWindow):
 
         self.df['attend_percent'] = counts
         df = self.df.loc[:, ['names', 'attend_percent']]
-        df = df.rename({'names': 'Student Name', 'attend_percent': 'Attendance Percentage'})
+        df = df.rename({'names': 'Student Name', 'attend_percent': 'Attendance Percentage'}, axis=1)
 
         self.table.setRowCount(df.shape[0])
         self.table.setColumnCount(df.shape[1])
@@ -90,6 +93,24 @@ class ViewAttendance(QMainWindow):
         self.detailAttendancePage = DetailAttendance(self.df, self.table.currentRow())
         self.detailAttendancePage.show()
         self.close()
+
+    def saveAsPdf(self):
+        self.df = pd.read_csv(self.attendance, index_col=0)
+        self.df = self.df.replace({0: "absent", 1: "present"})
+        self.df = self.df.rename({'names': 'Student Name'}, axis=1)
+
+        dlg = QFileDialog(self)
+        dlg.setFileMode(QFileDialog.Directory)
+        outputPath = dlg.getExistingDirectory()
+
+        baseFilename = os.path.split(self.attendance)[-1].split(".")[0]
+        htmlFilename = baseFilename + ".html"
+        pdfFilename = baseFilename + ".pdf"
+        htmlFilePath = os.path.join(outputPath, htmlFilename)
+        pdfFilePath = os.path.join(outputPath, pdfFilename)
+
+        self.df.to_html(htmlFilePath)
+        pdfkit.from_file(htmlFilePath, pdfFilePath)
 
     def back(self):
         from home import HomePage
