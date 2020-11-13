@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>signupPage</class>
+ <widget class="QMainWindow" name="signupPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Signup</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>120</y>
+      <width>441</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="0">
+      <widget class="QLabel" name="usernameLabel">
+       <property name="text">
+        <string>username:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="emailLineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="fullnameLabel">
+       <property name="text">
+        <string>Full Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>17</width>
+         <height>31</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="fullnameLineEdit"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="usernameLineEdit"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="passwordLabel">
+       <property name="text">
+        <string>Password:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="signupBtn">
+         <property name="text">
+          <string>Signup</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="backBtn">
+         <property name="text">
+          <string>back</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="emailLabel">
+       <property name="text">
+        <string>Email:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="passwordLineEdit"/>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="registrationFormLabel">
+       <property name="font">
+        <font>
+         <pointsize>18</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Registration Form</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
