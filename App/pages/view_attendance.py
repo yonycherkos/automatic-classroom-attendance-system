@@ -59,7 +59,7 @@ class ViewAttendance(QMainWindow):
         self.displayTable()
 
     def displayTable(self):
-        counts = list(round(((self.df.sum(axis=1)/self.df.shape[1])*100), 2))
+        counts = list(round(((self.df.sum(axis=1)/(self.df.shape[1] - 1))*100), 2))
         colorMap = {"Good": QtGui.QColor(0, 255, 0, 150), "Warning": QtGui.QColor(
             255, 255, 0, 150), "Danger": QtGui.QColor(255, 0, 0, 150)}
 
@@ -95,9 +95,9 @@ class ViewAttendance(QMainWindow):
         self.close()
 
     def saveAsPdf(self):
-        self.df = pd.read_csv(self.attendance, index_col=0)
-        self.df = self.df.replace({0: "absent", 1: "present"})
-        self.df = self.df.rename({'names': 'Student Name'}, axis=1)
+        df = pd.read_csv(self.attendance, index_col=0)
+        df = df.replace({0: "absent", 1: "present"})
+        df = df.rename({'names': 'Student Name'}, axis=1)
 
         dlg = QFileDialog(self)
         dlg.setFileMode(QFileDialog.Directory)
@@ -109,7 +109,7 @@ class ViewAttendance(QMainWindow):
         htmlFilePath = os.path.join(outputPath, htmlFilename)
         pdfFilePath = os.path.join(outputPath, pdfFilename)
 
-        self.df.to_html(htmlFilePath)
+        df.to_html(htmlFilePath)
         pdfkit.from_file(htmlFilePath, pdfFilePath)
 
     def back(self):
