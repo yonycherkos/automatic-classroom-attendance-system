@@ -31,9 +31,9 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QPushButton" name="takeAttendanceBtn">
+        <widget class="QPushButton" name="captureVideoBtn">
          <property name="text">
-          <string>Take Attendance</string>
+          <string>Capture Video</string>
          </property>
         </widget>
        </item>
@@ -102,6 +102,13 @@
         <widget class="QPushButton" name="backBtn">
          <property name="text">
           <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="uploadVideoBtn">
+         <property name="text">
+          <string>Upload Video</string>
          </property>
         </widget>
        </item>

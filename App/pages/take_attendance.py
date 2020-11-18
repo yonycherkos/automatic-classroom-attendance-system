@@ -3,7 +3,7 @@ sys.path.append(".")
 sys.path.append("./App/widgets")
 sys.path.append("./App/utils")
 
-from PyQt5.QtWidgets import QMainWindow, QLabel, QApplication
+from PyQt5.QtWidgets import QMainWindow, QLabel, QApplication, QFileDialog
 from face_recognizer_widget import FaceRecognizerWidget
 from video_recorder import VideoRecorder
 from PyQt5.QtCore import QTimer
@@ -23,7 +23,8 @@ class TakeAttendance(QMainWindow):
         self.setCentralWidget(self.takeAttendancePage)
         self.videoFrame.setVisible(False)
 
-        self.takeAttendanceBtn.clicked.connect(self.takeAttendance)
+        self.captureVideoBtn.clicked.connect(self.captureVideo)
+        self.uploadVideoBtn.clicked.connect(self.uploadVideo)
         self.quitBtn.clicked.connect(self.quit)
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
         self.backBtn.clicked.connect(self.back)
@@ -34,11 +35,14 @@ class TakeAttendance(QMainWindow):
 
         self.cameraOn = False
 
-    def takeAttendance(self):
+    def takeAttendance(self, videoPath=None):
         self.timer.start()
         self.videoFrame.setVisible(True)
         self.faceRecognizerWidget = FaceRecognizerWidget()
-        self.videoRecorder = VideoRecorder()
+        if videoPath is None:
+            self.videoRecorder = VideoRecorder()
+        else:
+            self.videoRecorder = VideoRecorder(videoPath)
         self.videoRecorder.startRecording()
         frameLayout = self.videoFrame.layout()
         frameLayout.replaceWidget(self.videoLabel, self.faceRecognizerWidget)
@@ -49,6 +53,14 @@ class TakeAttendance(QMainWindow):
         self.videoLabel = self.faceRecognizerWidget
 
         self.cameraOn = True
+
+    def captureVideo(self):
+        self.takeAttendance()
+
+    def uploadVideo(self):
+        dlg = QFileDialog(self)
+        videoPath, _ = dlg.getOpenFileName(self)
+        self.takeAttendance(videoPath)
 
     def quit(self):
         self.closeCamera()
