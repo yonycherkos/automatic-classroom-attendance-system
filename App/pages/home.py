@@ -3,9 +3,6 @@ sys.path.append(".")
 sys.path.append("./App/pages")
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from register_student import RegisterStudent
-from take_attendance import TakeAttendance
-from view_attendance import ViewAttendance
 from PyQt5 import uic
 import os
 
@@ -20,16 +17,19 @@ class HomePage(QMainWindow):
         self.viewAttendanceBtn.clicked.connect(self.viewAttendance)
 
     def registerStudent(self):
+        from register_student import RegisterStudent
         self.registerStudent = RegisterStudent()
         self.registerStudent.show()
         self.close()
 
     def takeAttendance(self):
+        from take_attendance import TakeAttendance
         self.takeAttendance = TakeAttendance()
         self.takeAttendance.show()
         self.close()
 
     def viewAttendance(self):
+        from view_attendance import ViewAttendance
         self.viewAttendance = ViewAttendance()
         self.viewAttendance.show()
         self.close()

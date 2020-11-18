@@ -46,13 +46,13 @@ class ViewAttendance(QMainWindow):
     def filter(self, selected):
         self.df = pd.read_csv(self.attendance, index_col=0)
         if selected == "Good":
-            attend_frac = self.df.sum(axis=1)/self.df.shape[1]
+            attend_frac = self.df.iloc[:, 1:].sum(axis=1)/(self.df.shape[1] - 1)
             self.df = self.df[attend_frac >= 0.9]
         elif selected == "Warning":
-            attend_frac = self.df.sum(axis=1)/self.df.shape[1]
+            attend_frac = self.df.iloc[:, 1:].sum(axis=1)/(self.df.shape[1] - 1)
             self.df =  self.df[(attend_frac >= 0.8) & (attend_frac < 0.9)]
         elif selected == "Danger":
-            attend_frac = self.df.sum(axis=1)/self.df.shape[1]
+            attend_frac = self.df.iloc[:, 1:].sum(axis=1)/(self.df.shape[1] - 1)
             self.df = self.df[attend_frac < 0.8]
         else:
             self.df = pd.read_csv(self.attendance, index_col=0)
