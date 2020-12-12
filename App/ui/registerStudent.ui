@@ -88,7 +88,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Take Images</string>
+        <string>Capture Images</string>
        </property>
       </widget>
       <widget class="QPushButton" name="uploadImagesBtn">
