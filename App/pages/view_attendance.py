@@ -56,6 +56,7 @@ class ViewAttendance(QMainWindow):
             self.df = self.df[attend_frac < 0.8]
         else:
             self.df = pd.read_csv(self.attendance, index_col=0)
+        self.searchText.setText("")
         self.displayTable()
 
     def displayTable(self):
