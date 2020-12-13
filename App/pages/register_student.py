@@ -107,10 +107,11 @@ class RegisterStudent(QMainWindow):
             self.showDialog(icon=QMessageBox.Warning,
                             displayText="take or upload face images for {}".format(self.lineEdit.text()), windowTitle="face images doesn't exists")
         else:
-            self.videoRecorder.camera.release()
-            cv2.destroyAllWindows()
-            self.cameraOn = False
-            self.registerLabel.setText("Registering...")
+            if self.cameraOn:
+                self.videoRecorder.camera.release()
+                cv2.destroyAllWindows()
+                self.cameraOn = False
+                self.registerLabel.setText("Registering...")
 
             # encode faces
             self.face_encoder = FaceEncoder(self.output, self.encodings, self.attendance, self.prototxt, self.model)
