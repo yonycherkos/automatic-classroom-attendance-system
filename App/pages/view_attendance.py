@@ -46,13 +46,13 @@ class ViewAttendance(QMainWindow):
     def filter(self, selected):
         self.df = pd.read_csv(self.attendance, index_col=0)
         if selected == "Good":
-            attend_frac = self.df.iloc[:, 1:].sum(axis=1)/(self.df.shape[1] - 1)
+            attend_frac = self.df.sum(axis=1)/df.count(axis=1)
             self.df = self.df[attend_frac >= 0.9]
         elif selected == "Warning":
-            attend_frac = self.df.iloc[:, 1:].sum(axis=1)/(self.df.shape[1] - 1)
+            attend_frac = self.df.sum(axis=1)/df.count(axis=1)
             self.df =  self.df[(attend_frac >= 0.8) & (attend_frac < 0.9)]
         elif selected == "Danger":
-            attend_frac = self.df.iloc[:, 1:].sum(axis=1)/(self.df.shape[1] - 1)
+            attend_frac = self.df.sum(axis=1)/df.count(axis=1)
             self.df = self.df[attend_frac < 0.8]
         else:
             self.df = pd.read_csv(self.attendance, index_col=0)
@@ -60,7 +60,7 @@ class ViewAttendance(QMainWindow):
         self.displayTable()
 
     def displayTable(self):
-        counts = list(round(((self.df.sum(axis=1)/(self.df.shape[1] - 1))*100), 2))
+        counts = list(round((self.df.sum(axis=1)/self.df.count(axis=1, numeric_only=True))*100, 2))
         colorMap = {"Good": QtGui.QColor(0, 255, 0, 150), "Warning": QtGui.QColor(
             255, 255, 0, 150), "Danger": QtGui.QColor(255, 0, 0, 150)}
 
@@ -97,7 +97,7 @@ class ViewAttendance(QMainWindow):
 
     def saveAsPdf(self):
         df = pd.read_csv(self.attendance, index_col=0)
-        df = df.replace({0: "absent", 1: "present"})
+        df = df.replace({0: "absent", 1: "present", None: "excused"})
         df = df.rename({'names': 'Student Name'}, axis=1)
 
         dlg = QFileDialog(self)

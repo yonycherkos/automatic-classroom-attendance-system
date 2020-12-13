@@ -42,9 +42,9 @@ class DetailAttendance(QMainWindow):
         self.table.setHorizontalHeaderLabels(self.currentDf.columns)
         self.table.horizontalHeader().setStretchLastSection(True)
 
-        colorMap = {"present": QtGui.QColor(0, 255, 0, 150), "absent": QtGui.QColor(255, 0, 0, 150)}
+        colorMap = {"present": QtGui.QColor(0, 255, 0, 150), "absent": QtGui.QColor(255, 0, 0, 150), "excused": QtGui.QColor(0, 255, 0, 150)}
 
-        currentDf = self.currentDf.replace({0: "absent", 1: "present"})
+        currentDf = self.currentDf.replace({0: "absent", 1: "present", None: "excused"})
         for (i, row) in enumerate(currentDf.values):
             color = colorMap[row[1]]
             for (j, data) in enumerate(row):
@@ -65,7 +65,7 @@ class DetailAttendance(QMainWindow):
                 item = self.table.item(row, column)  
                 if item is not None:  
                     updatedDf.loc[row, column] = str(item.text())  
-        updatedDf = updatedDf.replace({"absent": 0, "present": 1}) 
+        updatedDf = updatedDf.replace({"absent": 0, "present": 1, "excused": None}) 
         self.df = self.df.drop("attend_percent", axis=1)
         updateDf = np.array(updatedDf[1]).reshape(1, self.df.shape[1] - 1)
         self.df.loc[self.df["names"] == self.name, self.df.columns[1]:] = list(updateDf)
@@ -90,7 +90,7 @@ class DetailAttendance(QMainWindow):
         if (ret == QMessageBox.Save):
             self.df.to_csv(self.attendance)
             s = self.df.iloc[self.currentRow][1:]
-            percentage = round(s.sum()/len(s)*100, 2)
+            percentage = round(s.sum()/s.count()*100, 2)
             self.attendancePercentage.setText("{}".format(percentage))
         else:
             pass
