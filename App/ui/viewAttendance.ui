@@ -99,6 +99,9 @@
         <property name="text">
          <string>Back</string>
         </property>
+        <property name="shortcut">
+         <string>Backspace</string>
+        </property>
        </widget>
       </item>
      </layout>

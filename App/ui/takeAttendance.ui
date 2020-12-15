@@ -79,6 +79,9 @@
             <property name="text">
              <string>Quit</string>
             </property>
+            <property name="shortcut">
+             <string>Q</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -95,6 +98,9 @@
         <widget class="QPushButton" name="backBtn">
          <property name="text">
           <string>Back</string>
+         </property>
+         <property name="shortcut">
+          <string>Backspace</string>
          </property>
         </widget>
        </item>

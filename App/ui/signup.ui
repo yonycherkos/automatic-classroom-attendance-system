@@ -14,7 +14,7 @@
    <string>Signup</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -130,6 +130,9 @@
         <widget class="QPushButton" name="backBtn">
          <property name="text">
           <string>back</string>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+S</string>
          </property>
         </widget>
        </item>

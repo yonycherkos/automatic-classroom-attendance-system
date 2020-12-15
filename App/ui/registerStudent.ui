@@ -54,6 +54,9 @@
        <property name="text">
         <string>Back</string>
        </property>
+       <property name="shortcut">
+        <string>Backspace</string>
+       </property>
       </widget>
       <widget class="QPushButton" name="viewAttendanceBtn">
        <property name="geometry">
@@ -131,12 +134,18 @@
           <property name="text">
            <string>Capture</string>
           </property>
+          <property name="shortcut">
+           <string>Return</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="quitBtn">
           <property name="text">
            <string>Quit</string>
+          </property>
+          <property name="shortcut">
+           <string>Q</string>
           </property>
          </widget>
         </item>
