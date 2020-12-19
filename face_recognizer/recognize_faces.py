@@ -31,9 +31,9 @@ rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 # recognizing faces
 print("[INFO] detecting faces...")
 start = time.time()
-boxes = face_recognition.face_locations(rgb, model=args["detection_method"])
-# (boxes, _) = face_detection(image, args["prototxt"], args["model"], args["confidence"])
-# boxes = [(box[1], box[2], box[3], box[0]) for (i, box) in enumerate(boxes)]
+# boxes = face_recognition.face_locations(rgb, model=args["detection_method"])
+(boxes, _) = face_detection(image, args["prototxt"], args["model"], args["confidence"])
+boxes = [(box[1], box[2], box[3], box[0]) for (i, box) in enumerate(boxes)]
 end = time.time()
 print("[INFO] face detection tooks: {} ms".format((end - start)*1000))
 
@@ -64,6 +64,7 @@ for ((top, right, bottom, left), name) in zip(boxes, names):
 		0.75, (0, 255, 0), 2)
 
 # show the output image
+cv2.imwrite("output/yony.jpg", image)
 cv2.imshow("Image", image)
 cv2.waitKey(0)
         
